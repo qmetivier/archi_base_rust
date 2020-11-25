@@ -14,6 +14,7 @@ mod schema;
 
 use rocket::request::Request;
 use rocket_contrib::databases::diesel::PgConnection;
+use rocket::http::RawStr;
 
 #[get("/")]
 fn index(_db_conn: RustyDbConn) -> &'static str {
@@ -34,6 +35,6 @@ fn main() {
     rocket::ignite()
         .attach(RustyDbConn::fairing())
         .register(catchers![service_not_available])
-        .mount("/api", routes![index])
+        .mount("/api", routes![index, hello])
         .launch();
 }
